@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="view.css" /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!--------------------------View.css--------------------------->
+    <style>
+      @media (max-width: 768px) {
+        td {
+          font-size: 12px;
+        }
+      }
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+body {
+  height: 100vh;
+  padding: 10px;
+  background: linear-gradient(135deg, #e67171, #9b59b6);
+}
+.filter-panel {
+  border: solid white;
+  border-radius: 20px;
+  padding: 90px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.second-tabel {
+  margin-top: 50px;
+  background: linear-gradient(135deg, #e3ecf0, #ffffff);
+}
+.filter-panel .title {
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
+.filter-panel .title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+#Eligible {
+  color: green;
+}
+#not-Eligible {
+  color: red;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="filter-panel">
+      <div class="first-box">
+        <div id="filter-panel" style="margin-top: 50px">
+          <label for="blood-group-filter" class="title">Blood Group:</label>
+          <select
+            id="blood-group-filter"
+            class="form-select d-inline-block m-1">
+            <option value="all">All</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+         
+        </div>
+
+        <div class="form-inline">
+          <label for="eligibility-filter" class="title">Eligibility:</label>
+          <select  id="eligibility-filter" class="form-control mb-2 mr-sm-2">
+            <option value="">All</option>
+            <option value="Eligible" id="Eligible">Eligible</option>
+            <option value="Not Eligible" id="not-Eligible">Not Eligible</option>
+          </select>
+        </div>
+      </div>
+
+  
+      <label for="selectFilter" class="title">Mekhala</label>
+      <select id="selectFilter" class="form-control mb-2 mr-sm-2">
+        <option value="">Select Mekhala</option>
+        <option value="Kondotty">Kondotty</option>
+        <option value="Wandoor">Wandoor</option>
+        <option value="Kalikavu">Kalikavu</option>
+        <option value="Areacode">Areacode</option>
+        <option value="Malappuram">Malappuram</option>
+        <option value="Perinthalmanna">Perinthalmanna</option>
+        <option value="Mankada">Mankada</option>
+        <option value="Kuttippuram">Kuttippuram</option>
+        <option value="Tanur">Tanur</option>
+        <option value="Tirurangadi">Thirurangadi</option>
+        <option value="Tirur">Tirur</option>
+        <option value="Ponnani">Ponnani</option>
+        <option value="Perumpadappu">Perumpadappu</option>
+      </select>
+      
+      <button id="filter-button" style="width: 150px" class="btn btn-primary d-inline-block m-1">Apply Filter</button>
+
+      <form class="form-inline">
+        <label for="search-input" class="title">Search By Name:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" id="search-input" placeholder="Enter name to search"/>
+      </form><br>
+
+      <button id="edit-btn"class="btn btn-warning"class="title"onclick="editview()">Edit Details</button>
+
+    </div>
+
+    <div class="second-tabel">
+      <table id="data-table" class="table table-striped table-bordered table-sm table-hover">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Group</th>
+            <th>Details</th>
+            <th>Eligibility</th>
+          </tr>
+        </thead>
+        <tbody id="data-table-body"></tbody>
+      </table>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+    <script>
+      //edit button
+
+      function editview() {
+        console.log("set aanu");
+        window.location.href = "edit.html";
+      }
+    </script>
+    <script type="module">
+      // Initialize Firebase
+      var firebaseConfig = {
+        // Your Firebase config goes here
+        databaseURL: "https://bloodmanagementsystem-1f4ad-default-rtdb.firebaseio.com/",
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      var database = firebase.database();
+
+      // Get a reference to the data in the Firebase database
+      var dataRef = database.ref("info");
+
+      // Filling the table
+      var donNo = 0;
+      var tbody = document.getElementById("data-table-body");
+      function addItemToTable(name, age, gender, group, district,block,mekhala, date, phone,whatsapp) {
+        let trow = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
+        let td4 = document.createElement("td");
+        let td5 = document.createElement("td");
+
+        td1.innerHTML = ++donNo;
+        td2.innerHTML = name;
+        td3.innerHTML = group;
+        td4.innerHTML = `<ul>
+                      <li >Age: ${age}</li>
+                      <li>Gender: ${gender}</li>
+                      <li>Last Donated Date: ${date}</li>
+                      <li>Address: ${mekhala},${block},${district}</li>
+                      <li>Contact Number: ${phone}</li>
+                      <li>Whatsapp Number: ${whatsapp}</li>
+                    </ul>`;
+
+        // Determine Eligibility
+        var lastDonatedDate = new Date(date);
+        var currentDate = new Date();
+        var threeMonthsAgo = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() - 3,
+          currentDate.getDate()
+        );
+        var td = document.createElement("td");
+        td5.style.textAlign = "center";
+        td5.style.verticalAlign = "middle";
+        td1.style.textAlign = "center";
+        td1.style.verticalAlign = "middle";
+        td2.style.textAlign = "center";
+        td2.style.verticalAlign = "middle";
+        td3.style.textAlign = "center";
+        td3.style.verticalAlign = "middle";
+        if (lastDonatedDate < threeMonthsAgo)
+          td5.innerHTML =
+            "<h6  style='color: green;font-size: 15px;'>Eligible</h6>";
+        else
+          td5.innerHTML =
+            "<h6 style='color: red;font-size: 15px;'>Not Eligible</h6>";
+
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+        trow.appendChild(td4);
+        trow.appendChild(td5);
+        tbody.appendChild(trow);
+      }
+
+      // Fetch the data from the Firebase database
+      dataRef.on("value", function (snapshot) {
+        var data = snapshot.val();
+
+        // Clear the table body
+        tbody.innerHTML = "";
+
+        // Loop through the data and add it to the table
+        for (var key in data) {
+          addItemToTable(
+            data[key].name,
+            data[key].age,
+            data[key].gender,
+            data[key].group,
+            data[key].district,
+            data[key].block,
+            data[key].mekhala,
+            data[key].date,
+            data[key].phone,
+            data[key].whatsapp
+          );
+        }
+      });
+      //search by name
+      let searchInput = document.getElementById("search-input");
+      searchInput.addEventListener("keyup", function () {
+        let filter = searchInput.value.toUpperCase();
+        let table = document.getElementById("data-table-body");
+        let tr = table.getElementsByTagName("tr");
+        for (let i = 0; i < tr.length; i++) {
+          let td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            let name = td.textContent || td.innerText;
+            if (name.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      });
+
+  
+
+const filterButton = document.getElementById("filter-button");
+filterButton.addEventListener("click", function() {
+  const selectedBloodGroup = document.getElementById("blood-group-filter").value;
+  const selectedEligibility = document.getElementById("eligibility-filter").value;
+  const selectedAddress = document.getElementById("selectFilter").value;
+  const tableBody = document.getElementById("data-table-body");
+  const rows = tableBody.getElementsByTagName("tr");
+
+  for (let i = 0; i < rows.length; i++) {
+    const bloodGroupCell = rows[i].getElementsByTagName("td")[2];
+    const eligibilityCell = rows[i].getElementsByTagName("td")[4];
+    const addressCell = rows[i].getElementsByTagName("td")[3];
+
+    const bloodGroup = bloodGroupCell.textContent;
+    const eligibility = eligibilityCell.textContent;
+    const address = addressCell.textContent;
+
+    if (
+      (selectedBloodGroup === "all" || bloodGroup === selectedBloodGroup) &&
+      (selectedEligibility === "" || eligibility === selectedEligibility) &&
+      (selectedAddress === "" || address.includes(selectedAddress))
+    ) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
+
+
+</script>
+
+
+  
+  </body>
+</html>

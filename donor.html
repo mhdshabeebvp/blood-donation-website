@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+</head>
+<body>  
+<form method="post" id="dregistration-form" class="donor-form">
+<br /><h3 class="title">Donor Registration</h3><br />
+    <label for="dname"><h6>Name of Donor:</h6></label>
+    <input type="text" class="form-control" placeholder="Name Of Donar" id="dname" name="dname"/><br>
+    <label for="dage"><h6>Age:</h6></label>
+    <input type="number" class="form-control" placeholder="Age" id="dage" name="dage"/><br/>
+    <label for="dgender"><h6>Gender :</h6></label>
+    <input type="radio" placeholder="Gender" id="dmale" class="dgender" name="dgender" value="Male"/>
+    <label for="Male"> Male</label>
+    <input type="radio" placeholder="Gender" id="dfemale" class="dgender" name="dgender" value="Female"/>
+    <label for="Female"> Female</label><br/>
+    <label for="dgroup"><h6>Select Blood Group:</h6></label>
+    <select id="dgroup" name="dgroup" class="form-select input-group mb-3">
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+    </select>
+    <!-- Select option for states -->
+    <label for="ddistrict">Select District:</label>
+    <select id="ddistrict" name="ddistrict" class="form-select input-group mb-3">
+        <option value="">Select State</option>
+        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+        <option value="Kollam">Kollam</option>
+        <option value="Alappuzha">Alappuzha</option>
+        <option value="Pathanamthitta">Pathanamthitta</option>
+        <option value="Kottayam">Kottayam</option>
+        <option value="Idukki">Idukki</option>
+        <option value="Ernakulam">Ernakulam</option>
+        <option value="Palakkad">Palakkad</option>
+        <option value="Malappuram">Malappuram</option>
+        <option value="Kozhikode">Kozhikode</option>
+        <option value="Wayanad">Wayanad</option>
+        <option value="Kannur">Kannur</option>
+        <option value="Kasargod">Kasargod</option>
+    </select>
+    
+    <!-- Select option for cities -->
+    <label for="dblock">Select Block:</label>
+    <select id="dblock" name="dblock" class="form-select input-group mb-3" >
+        <option value="">Select Block</option>
+    </select>
+    <label for="dmekhala" >Select Mekhala:</label>
+    <select name="" id="dmekhala" name="dmekhala" class="form-select input-group mb-3" >
+        <option value="" >Select Mekhala</option>
+    </select>
+    <label for="ddate"><h6>Last Blood Donated Date</h6></label>
+    <input type="Date" class="form-control" placeholder="Last Donated Date" id="ddate" name="ddate"/><br />
+    <label for="dphone"><h6>Contact Number</h6></label>
+    <input type="tel" class="form-control" id="dphone" name="dphone" placeholder="Enter Mobile Number" pattern="[0-9]{10}" required/>
+    <label for="dwhatsapp"><h6>Whatsapp Number</h6></label>
+    <input type="tel" class="form-control" id="dwhatsapp" name="dwhatsapp" placeholder="Enter Whatsapp Number" pattern="[0-9]{10}" required/>
+    <div class="button"><input type="submit" id="reg-btn" onclick="" value="Register" /></div>
+    <h6 id="alert" style="display: none" >your request has been send</h6>
+</form>
+</div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+<script>
+
+    // Data for cities
+var cities = {
+    Malappuram:{ "Nilambur":["Nilambur", "Kondotty", "Wandoor", "Kalikavu", "Areacode", "Malappuram", "Perinthalmanna", "Mankada", "Kuttippuram", "Tanur", "Tirurangadi", "Tirur", "Ponnani", "Perumpadappu"],
+    "Kondotty":["City 4", "City 5", "City 6"],
+    "Wandoor": ["City 7", "City 8", "City 9"],
+    "Kalikavu": ["City 7", "City 8", "City 9"],
+    "Areacode": ["City 7", "City 8", "City 9"],
+    "Malappuram": ["City 7", "City 8", "City 9"],
+    "Perinthalmanna": ["City 7", "City 8", "City 9"],
+    "Mankada": ["City 7", "City 8", "City 9"],
+    "Kuttippuram": ["City 7", "City 8", "City 9"],
+    "Tanur": ["City 7", "City 8", "City 9"],
+    "Thirurangadi": ["Vallikunu", "Ariyallur", "Parappanangadi", "Neduva", "Thirurangadi", "A R Nagar","Peruvallur","Munniyur","Thenhipalam West","Thenhipalam East"],
+    "Tirur": ["City 7", "City 8", "City 9"],
+    "Ponnani": ["City 7", "City 8", "City 9"],
+    "Perumpadappu":["City 7", "City 8", "City 9"]
+
+}};
+
+//////
+const firebaseConfig = {
+        databaseURL: "https://bloodmanagementsystem-1f4ad-default-rtdb.firebaseio.com/",
+      };
+      firebase.initializeApp(firebaseConfig);
+      // here connection is created with database
+      const database = firebase.database();
+
+      // run function on click submit btn
+      let donorInfo = firebase.database().ref("info");
+      document.querySelector("#dregistration-form").addEventListener("submit", submitForm);
+
+      function submitForm(e) {
+        e.preventDefault();
+        let name = document.querySelector("#dname").value;
+        let age = document.querySelector("#dage").value;
+        let gender = document.querySelector(".dgender").value;
+        let group = document.querySelector("#dgroup").value;
+        let district = document.querySelector("#ddistrict").value;
+        let block = document.querySelector("#dblock").value;
+        let mekhala = document.querySelector("#dmekhala").value;
+        let date = document.querySelector("#ddate").value;
+        let phone = document.querySelector("#dphone").value;
+        let whatsapp = document.querySelector("#dwhatsapp").value;
+
+        saveDonorInfo(name, age, gender, group, district,block,mekhala, date, phone,whatsapp);
+
+        document.querySelector("#alert").style.display = "block";
+
+        setTimeout(function () {
+          document.querySelector("#alert").style.display = "none";
+        }, 3000);
+        document.querySelector("#dregistration-form").reset();
+      }
+// Create and display the pop-up message
+document.querySelector("#alert").style.display = "block";
+      setTimeout(function () {
+        document.querySelector("#alert").style.display = "none";
+      }, 3000);
+      document.querySelector("#dregistration-form").reset();
+
+      function saveDonorInfo(name, age, gender, group, district,block,mekhala, date, phone,whatsapp) {
+        let newDonorInfo = donorInfo.push();
+
+        newDonorInfo.set({
+          name: name,
+          age: age,
+          gender: gender,
+          group: group,
+          district: district,
+          block:block,
+          mekhala:mekhala,
+          date: date,
+          phone: phone,
+          whatsapp:whatsapp
+
+        });
+      }
+
+
+
+
+
+// Get reference to select elements
+var statesSelect = document.getElementById("ddistrict");
+var citiesSelect = document.getElementById("dblock");
+var localAreasSelect = document.getElementById("dmekhala");
+
+// Event listener for states select
+statesSelect.addEventListener("change", function() {
+  // Get selected state
+  var selectedState = statesSelect.value;
+
+  // Remove all options from cities select
+  while (citiesSelect.firstChild) {
+    citiesSelect.removeChild(citiesSelect.firstChild);
+  }
+
+  // Add new options for selected state
+  if (selectedState in cities) {
+    var options = Object.keys(cities[selectedState]);
+    options.forEach(function(option) {
+      var optionElement = document.createElement("option");
+      optionElement.value = option;
+      optionElement.text = option;
+      citiesSelect.appendChild(optionElement);
+    });
+
+    // Enable the city select
+    citiesSelect.disabled = false;
+  } else {
+    // Disable the city select
+    citiesSelect.disabled = true;
+  }
+
+  // Remove all options from local areas select
+  while (localAreasSelect.firstChild) {
+    localAreasSelect.removeChild(localAreasSelect.firstChild);
+  }
+
+  // Disable the local areas select
+  localAreasSelect.disabled = true;
+});
+
+// Event listener for cities select
+citiesSelect.addEventListener("change", function() {
+  // Get selected city
+  var selectedCity = citiesSelect.value;
+  var selectedState = statesSelect.value;
+
+  // Remove all options from local areas select
+  while (localAreasSelect.firstChild) {
+    localAreasSelect.removeChild(localAreasSelect.firstChild);
+  }
+
+  // Add new options for selected city
+  if (selectedState in cities && selectedCity in cities[selectedState]) {
+    var options = cities[selectedState][selectedCity];
+    options.forEach(function(option) {
+      var optionElement = document.createElement("option");
+      optionElement.value = option;
+      optionElement.text = option;
+      localAreasSelect.appendChild(optionElement);
+    });
+
+      // Enable the local areas select
+      localAreasSelect.disabled = false;
+    } else {
+      // Disable the local areas select
+      localAreasSelect.disabled = true;
+    }
+  });
+// };
+
+// Call the initialize function
+initialize();
+
+// Initialize function
+function initialize() {
+  // Disable the city select
+  citiesSelect.disabled = true;
+
+  // Disable the local areas select
+  localAreasSelect.disabled = true;
+}
+
+window.onload = function() {
+  initialize();
+};
+</script>
+</html>

@@ -1,0 +1,156 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Blood Management System</title>
+      <link rel="stylesheet" href="land(sha).css" />
+        <!-------------------land.css------------->
+
+        <style>
+          :root {
+            --background: #1a1a2e;
+            --color: #ffffff;
+            --primary-color: #0f3460;
+          }
+          * {
+            box-sizing: border-box;
+          }
+          body {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "poppins";
+            background: var(--background);
+            color: var(--color);
+          }
+          .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+    
+          .login-container {
+            position: relative;
+            width: 22.2rem;
+          }
+          .form-container {
+            border: 1px solid hsla(0, 0%, 65%, 0.158);
+            box-shadow: 0 0 36px 1px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(20px);
+            z-index: 99;
+            padding: 2rem;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -ms-border-radius: 10px;
+            -o-border-radius: 10px;
+          }
+          .circle {
+            width: 8rem;
+            height: 8rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            position: absolute;
+          }
+    
+          .circle-one {
+            top: 0;
+            left: 0;
+            z-index: -1;
+            transform: translate(-45%, -45%);
+            -webkit-transform: translate(-45%, -45%);
+            -moz-transform: translate(-45%, -45%);
+            -ms-transform: translate(-45%, -45%);
+            -o-transform: translate(-45%, -45%);
+          }
+    
+          .circle-two {
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+            transform: translate(45%, 45%);
+            -webkit-transform: translate(45%, 45%);
+            -moz-transform: translate(45%, 45%);
+            -ms-transform: translate(45%, 45%);
+            -o-transform: translate(45%, 45%);
+          }
+          button {
+            background: transparent;
+    
+            color: #3bd9d9;
+    
+            font-weight: 400;
+    
+            font-size: 24px;
+            text-transform: uppercase;
+    
+            padding: 16px 36px;
+    
+            border: 2px solid #3bd9d9;
+            border-radius: 32px;
+    
+            transform: translate(0);
+            overflow: hidden;
+            cursor: pointer;
+          }
+          button::before {
+            content: "";
+            transform: rotate(-16deg);
+    
+            position: absolute;
+    
+            background: #3bd9d9;
+            width: 8px;
+    
+            top: 0;
+            bottom: 0;
+    
+            left: -32px;
+    
+            filter: blur (6px);
+          }
+    
+          button:hover::before {
+            transition: 0.75s;
+    
+            left: calc(100% + 32px);
+          }
+        </style>
+    </head>
+    <body>
+      <section class="container">
+        <div class="login-container">
+          <div class="circle circle-one"></div>
+          <div class="form-container">
+            <button id="btnview" class="btn btn-danger" onclick="viewDonor()">
+              View Donors List
+            </button>
+            <br /><br />
+            <button id="btnreg" class="btn btn-primary" onclick="donorRegistry()">
+              New Donor Registration</button
+            ><br />
+          </div>
+          <div class="circle circle-two"></div>
+        </div>
+        <div class="theme-btn-container"></div>
+      </section>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase.min.js"></script>
+      <script>
+        function donorRegistry() {
+          window.location.href = "donor.html";
+        }
+        function viewDonor() {
+          window.location.href = "view.html";
+        }
+      </script>
+  
+    </body>
+  </html>

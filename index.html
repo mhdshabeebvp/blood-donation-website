@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+  rel="stylesheet"
+  href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+/>
+<!--ICONSCOUNT CDN-->
+<link
+  rel="stylesheet"
+  href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+/>
+<script src=""></script>
+   <!-------------------index.css------------->
+
+   <style>
+    :root {
+      --background: #1a1a2e;
+      --color: #ffffff;
+      --primary-color: #0f3460;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      box-sizing: border-box;
+      font-family: "poppins";
+      background: var(--background);
+      color: var(--color);
+      letter-spacing: 1px;
+      transition: background 0.2s ease;
+      -webkit-transition: background 0.2s ease;
+      -moz-transition: background 0.2s ease;
+      -ms-transition: background 0.2s ease;
+      -o-transition: background 0.2s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--color);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      position: relative;
+      width: 22.2rem;
+    }
+    .form-container {
+      border: 1px solid hsla(0, 0%, 65%, 0.158);
+      box-shadow: 0 0 36px 1px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      backdrop-filter: blur(20px);
+      z-index: 99;
+      padding: 2rem;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      -o-border-radius: 10px;
+    }
+
+    .login-container form input {
+      display: block;
+      padding: 14.5px;
+      width: 100%;
+      margin: 2rem 0;
+      color: var(--color);
+      outline: none;
+      background-color: #9191911f;
+      border: none;
+      border-radius: 5px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      font-size: 15px;
+      backdrop-filter: blur(15px);
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+    }
+
+    .login-container form input:focus {
+      box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.2);
+      animation: wobble 0.3s ease-in;
+      -webkit-animation: wobble 0.3s ease-in;
+    }
+
+    .login-container form button {
+      background-color: var(--primary-color);
+      color: var(--color);
+      display: block;
+      padding: 13px;
+      border-radius: 5px;
+      outline: none;
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      transition: all 0.1s ease-in-out;
+      border: none;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+      -webkit-transition: all 0.1s ease-in-out;
+      -moz-transition: all 0.1s ease-in-out;
+      -ms-transition: all 0.1s ease-in-out;
+      -o-transition: all 0.1s ease-in-out;
+    }
+
+    .login-container form button:hover {
+      box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+      transform: scale(1.02);
+      -webkit-transform: scale(1.02);
+      -moz-transform: scale(1.02);
+      -ms-transform: scale(1.02);
+      -o-transform: scale(1.02);
+    }
+
+    .circle {
+      width: 8rem;
+      height: 8rem;
+      background: var(--primary-color);
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+      position: absolute;
+    }
+
+    .illustration {
+      position: absolute;
+      top: -14%;
+      right: -2px;
+      width: 90%;
+    }
+
+    .circle-one {
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transform: translate(-45%, -45%);
+      -webkit-transform: translate(-45%, -45%);
+      -moz-transform: translate(-45%, -45%);
+      -ms-transform: translate(-45%, -45%);
+      -o-transform: translate(-45%, -45%);
+    }
+
+    .circle-two {
+      bottom: 0;
+      right: 0;
+      z-index: -1;
+      transform: translate(45%, 45%);
+      -webkit-transform: translate(45%, 45%);
+      -moz-transform: translate(45%, 45%);
+      -ms-transform: translate(45%, 45%);
+      -o-transform: translate(45%, 45%);
+    }
+
+    .register-forget {
+      margin: 1rem 0;
+      display: flex;
+      justify-content: space-between;
+    }
+    .opacity {
+      opacity: 0.6;
+    }
+
+    .theme-btn-container {
+      position: absolute;
+      left: 0;
+      bottom: 2rem;
+    }
+
+    .theme-btn {
+      cursor: pointer;
+      transition: all 0.3s ease-in;
+    }
+
+    .theme-btn:hover {
+      width: 40px !important;
+    }
+
+    @keyframes wobble {
+      0% {
+        transform: scale(1.025);
+        -webkit-transform: scale(1.025);
+        -moz-transform: scale(1.025);
+        -ms-transform: scale(1.025);
+        -o-transform: scale(1.025);
+      }
+      25% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+      }
+      75% {
+        transform: scale(1.025);
+        -webkit-transform: scale(1.025);
+        -moz-transform: scale(1.025);
+        -ms-transform: scale(1.025);
+        -o-transform: scale(1.025);
+      }
+      100% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+      }
+    }
+
+    .contact_socials {
+      display: flex;
+      gap: 3.4rem;
+      margin-top: 3rem;
+    }
+
+    .contact_socials a {
+      background: var(--color-bg2);
+      padding: 0.5rem;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .contact_socials a:hover {
+      background: transparent;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      text-decoration: none;
+      list-style: none;
+      box-sizing: border-box;
+    }
+    :root {
+      --color-primary: #6c63ff;
+      --color-success: #00bf8e;
+      --color-danger: #f75842;
+      --color-danger-variant: rgba(247, 88, 66, 0.4);
+      --color-white: #fff;
+      --color-light: rgba(255, 255, 255, 0.7);
+      --color-black: #000;
+      --color-bg: #1f2641;
+      --color-bg1: #2e3267;
+      --color-bg2: #424890;
+
+      --container-width-lg: 80%;
+      --container-width-md: 90%;
+      --container-width-sm: 94%;
+
+      --transition: all 400ms ease;
+    }
+  
+    a {
+      color: var(--color-white);
+    }
+
+    /*-------------------------MEDIA QUERIES (phone)----------------------------*/
+
+    @media screen and (max-width: 600px) {
+      .container {
+        width: var(--container-width-sm);
+      }
+    }
+  </style>
+
+</head>
+<body>
+  <section class="container">
+    <div class="login-container">
+      <div class="circle circle-one"></div>
+      <div class="form-container">
+        <img
+          src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png"
+          alt="illustration"
+          class="illustration"
+        />
+        <h1 class="opacity">LOGIN</h1>
+        <form id="login-form">
+          <input
+            type="text"
+            placeholder="USERNAME"
+            id="username"
+            name="username"
+          />
+          <input
+            type="password"
+            placeholder="PASSWORD"
+            id="password"
+            name="password"
+          />
+          <button
+            class="opacity"
+            type="submit"
+            value="Submit"
+            onclick="checkLogin()"
+          >
+            SUBMIT
+          </button>
+
+          <section class="contact">
+            <ul class="contact_socials">
+              <li>
+                <a
+                  href="https://www.facebook.com/profile.php?id=100066993018050&mibextid=ZbWKwL"
+                >
+                  <i class="uil uil-facebook-f"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  href="https://instagram.com/dyfi_thavanur?igshid=YmMyMTA2M2Y="
+                >
+                  <i class="uil uil-instagram-alt"></i
+                ></a>
+              </li>
+              <li>
+                <a href="comingsoon.html"> <i class="uil uil-twitter"></i></a>
+              </li>
+              <li>
+                <a href="comingsoon.html">
+                  <i class="uil uil-linkedin-alt"></i
+                ></a>
+              </li>
+            </ul>
+          </section>
+        </form>
+        <p id="message" style=" margin-top: 23px; color: red"></p>
+      </div>
+      <div class="circle circle-two"></div>
+    </div>
+    <div class="theme-btn-container"></div>
+  </section>
+
+    <!-- Firebase Library -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script >
+        // Initialize Firebase
+var firebaseConfig = {
+  apiKey: "AIzaSyAspxiqNyTDo7q5M3qwG0nUgQOrxqIeDdY",
+  authDomain: "loginuser-f5759.firebaseapp.com",
+  projectId: "loginuser-f5759",
+  storageBucket: "loginuser-f5759.appspot.com",
+  messagingSenderId: "810495893081",
+  appId: "1:810495893081:web:4387da90f2e48ca64ddb48"
+};
+firebase.initializeApp(firebaseConfig);
+
+// Get form elements
+const form = document.querySelector('#login-form');
+const username = document.querySelector('#username');
+const password = document.querySelector('#password');
+const message = document.querySelector('#message');
+
+// Add form submit event
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // Get values
+  const usernameVal = username.value;
+  const passwordVal = password.value;
+
+  // Sign in user
+  firebase.auth().signInWithEmailAndPassword(usernameVal, passwordVal)
+    .then(() => {
+      window.location.href = "land.html";
+    })
+    .catch((error) => {
+      message.innerHTML = error.message;
+    });
+});
+
+    </script>
+</body>
+</html>
