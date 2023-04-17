@@ -33,6 +33,7 @@
         padding: 25px 30px;
         border-radius: 5px;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        margin-top: 50px;
       }
       #login-form .title {
         font-size: 25px;
@@ -182,63 +183,58 @@
         <div id="error-message"></div>
       </form>
     </div>
-
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
     <script>
-      const firebaseConfig = {
-        databaseURL: "https://bloodmgmt-default-rtdb.firebaseio.com",
-      };
-      firebase.initializeApp(firebaseConfig);
-      // here connection is created with database
-      const database = firebase.database();
+        const firebaseConfig = {
+        databaseURL: "https://bloodmgmt-default-rtdb.firebaseio.com"
+    }
+    firebase.initializeApp(firebaseConfig)
+    // here connection is created with database
+    const database = firebase.database()
 
-      // run function on click submit btn
-      let donorInfo = firebase.database().ref("info");
-      document
-        .querySelector("#dregistration-form")
-        .addEventListener("submit", submitForm);
+    // run function on click submit btn
+    let donorInfo = firebase.database().ref("info")
+    document.querySelector("#dregistration-form").addEventListener("submit",submitForm)
 
-      function submitForm(e) {
-        e.preventDefault();
-        let name = document.querySelector("#dname").value;
-        let age = document.querySelector("#dage").value;
-        let gender = document.querySelector(".dgender").value;
-        let group = document.querySelector("#dgroup").value;
-        let state = document.querySelector("#dstate").value;
-        let date = document.querySelector("#ddate").value;
-        let phone = document.querySelector("#dphone").value;
 
-        saveDonorInfo(name, age, gender, group, state, date, phone);
+  function submitForm(e){
+    e.preventDefault();
+    let name = document.querySelector("#dname").value;
+    let age = document.querySelector("#dage").value;
+    let gender = document.querySelector(".dgender").value;
+    let group = document.querySelector("#dgroup").value;
+    let state = document.querySelector("#dstate").value;
+    let date = document.querySelector("#ddate").value;
+    let phone = document.querySelector("#dphone").value;
 
-        document.querySelector("#alert").style.display = "block";
+    saveDonorInfo(name,age,gender,group,state,date,phone); 
 
-        setTimeout(function () {
-          document.querySelector("#alert").style.display = "none";
-        }, 3000);
-        document.querySelector("#dregistration-form").reset();
-      }
 
-      // Create and display the pop-up message
-      document.querySelector("#alert").style.display = "block";
-      setTimeout(function () {
-        document.querySelector("#alert").style.display = "none";
-      }, 3000);
-      document.querySelector("#dregistration-form").reset();
 
-      function saveDonorInfo(name, age, gender, group, state, date, phone) {
-        let newDonorInfo = donorInfo.push();
 
-        newDonorInfo.set({
-          name: name,
-          age: age,
-          gender: gender,
-          group: group,
-          state: state,
-          date: date,
-          phone: phone,
-        });
-      }
+document.querySelector('#alert').style.display = 'block';
+
+setTimeout(function(){
+    document.querySelector('#alert').style.display = 'none';
+},3000);
+document.querySelector("#dregistration-form").reset()
+}
+
+function saveDonorInfo(name,age,gender,group,state,date,phone){
+    
+    let newDonorInfo = donorInfo.push();
+
+    newDonorInfo.set({
+        name:name,
+        age:age,
+        gender:gender,
+        group:group,
+        state:state,
+        date:date,
+        phone:phone
+    })
+}
     </script>
-  </body>
+</body>
 </html>
